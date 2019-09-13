@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import Data from './components/Card';
-import Nextpage from './components/Nextpage';
+import PreviousPage from './components/Previouspage';
+import NextPage from './components/Nextpage';
 import styled from 'styled-components';
 
 const App = () => {
@@ -17,10 +18,15 @@ const App = () => {
   const [currentPage, setPage] = useState(1);
 
   
-  function turnPage() {
+  function previousPage() {
+    console.log('clicked');
+    setPage(currentPage - 1);
+  }
+  function nextPage() {
     console.log('clicked');
     setPage(currentPage + 1);
   }
+
   const api = `https://swapi.co/api/people/?page=${currentPage}`;
 
   useEffect( () => {
@@ -43,7 +49,8 @@ const App = () => {
   return (
     <StyledApp className="App">
       <h1 className="Header">React Wars</h1>
-      <Nextpage turnPage={turnPage} />
+      <PreviousPage previousPage={previousPage} />
+      <NextPage nextPage={nextPage} />
       <Data data={characters}/>
     </StyledApp>
   );

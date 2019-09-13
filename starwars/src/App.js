@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import Data from './components/Data';
+import styled from 'styled-components';
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -19,18 +20,24 @@ const App = () => {
     axios.get(api)
       .then( res => {
         setCharacters(res.data.results)
-        debugger
       })
       .catch( error => {
         console.log('you are getting an error')
       })
     }, []);
 
+  const StyledApp = styled.div`
+    h1 {
+      padding: 2rem 0;
+      margin: 0;
+    }
+  `;
+
   return (
-    <div className="App">
+    <StyledApp className="App">
       <h1 className="Header">React Wars</h1>
       <Data data={characters}/>
-    </div>
+    </StyledApp>
   );
 }
 

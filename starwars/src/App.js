@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import Data from './components/Data';
+import Data from './components/Card';
 import styled from 'styled-components';
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
 
   const [characters, setCharacters] = useState([]);
 
-  const api = 'https://swapi.co/api/people';
+  const api = 'https://swapi.co/api/people/id';
 
   useEffect( () => {
     axios.get(api)
@@ -22,7 +22,7 @@ const App = () => {
         setCharacters(res.data.results)
       })
       .catch( error => {
-        console.log('you are getting an error')
+        console.log(error)
       })
     }, []);
 

@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.css';
+import Data from './components/Card';
+import PreviousPage from './components/Previouspage';
+import NextPage from './components/Nextpage';
+import styled from 'styled-components';
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -9,10 +14,45 @@ const App = () => {
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
 
+  const [characters, setCharacters] = useState([]);
+  const [currentPage, setPage] = useState(1);
+
+  
+  function previousPage() {
+    console.log('clicked');
+    setPage(currentPage - 1);
+  }
+  function nextPage() {
+    console.log('clicked');
+    setPage(currentPage + 1);
+  }
+
+  const api = `https://swapi.co/api/people/?page=${currentPage}`;
+
+  useEffect( () => {
+    axios.get(api)
+      .then( res => {
+        setCharacters(res.data.results)
+      })
+      .catch( error => {
+        console.log(error)
+      })
+    }, [currentPage]);
+
+  const StyledApp = styled.div`
+    h1 {
+      padding: 2rem 0;
+      margin: 0;
+    }
+  `;
+
   return (
-    <div className="App">
+    <StyledApp className="App">
       <h1 className="Header">React Wars</h1>
-    </div>
+      <PreviousPage previousPage={previousPage} />
+      <NextPage nextPage={nextPage} />
+      <Data data={characters}/>
+    </StyledApp>
   );
 }
 
